@@ -1,7 +1,6 @@
 package com.connex.car.insurance.quote.service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
 
