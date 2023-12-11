@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.connex.car.insurance.quote.mapper.AgeFactorMapper;
+import com.connex.car.insurance.quote.mapper.ClaimsMapper;
 import com.connex.car.insurance.quote.mapper.DriverRecordMapper;
 import com.connex.car.insurance.quote.mapper.DrivingExperienceMapper;
 
@@ -16,7 +17,8 @@ public class QuoteServiceTests {
 
     @BeforeAll
     public static void setUp() {
-        service = new QuoteService(new AgeFactorMapper(), new DrivingExperienceMapper(), new DriverRecordMapper());
+        service = new QuoteService(new AgeFactorMapper(), new DrivingExperienceMapper(), new DriverRecordMapper(),
+                new ClaimsMapper());
     }
 
     @Test
@@ -105,10 +107,12 @@ public class QuoteServiceTests {
     public void testGetDrivingExperienceFactorGreaterThanOrEqual10() {
         // prepare
         Byte yearsOfExperience = 10;
+        Double expectedFactor = 0.9;
         // call
         Optional<Double> factor = service.getDrivingExperienceFactor(yearsOfExperience);
         // assert
-        assertFalse(factor.isPresent());
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
     }
 
     @Test
@@ -127,11 +131,79 @@ public class QuoteServiceTests {
     public void testGetDriverRecordFactor1Accident() {
         // prepare
         Byte accidents = 1;
-        Double expectedFactor = 1.2;
+        Double expectedFactor = 1.1;
         // call
         Optional<Double> factor = service.getDriverRecordFactor(accidents);
         // assert
         assertTrue(factor.isPresent());
         assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetDriverRecordFactor3Accident() {
+        // prepare
+        Byte accidents = 3;
+        Double expectedFactor = 1.3;
+        // call
+        Optional<Double> factor = service.getDriverRecordFactor(accidents);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetDriverRecordFactorMoreThan3Accident() {
+        // prepare
+        Byte accidents = 4;
+        // call
+        Optional<Double> factor = service.getDriverRecordFactor(accidents);
+        // assert
+        assertFalse(factor.isPresent());
+    }
+
+    @Test
+    public void testGetClaimsFactor0Claims() {
+        // prepare
+        Byte claims = 0;
+        Double expectedFactor = 0.9;
+        // call
+        Optional<Double> factor = service.getClaimsFactor(claims);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetClaimsFactor1Claim() {
+        // prepare
+        Byte claims = 1;
+        Double expectedFactor = 1.2;
+        // call
+        Optional<Double> factor = service.getClaimsFactor(claims);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetClaimsFactor2Claims() {
+        // prepare
+        Byte claims = 2;
+        Double expectedFactor = 1.5;
+        // call
+        Optional<Double> factor = service.getClaimsFactor(claims);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetClaimsFactor4Claims() {
+        // prepare
+        Byte claims = 4;
+        // call
+        Optional<Double> factor = service.getClaimsFactor(claims);
+        // assert
+        assertFalse(factor.isPresent());
     }
 }

@@ -14,14 +14,17 @@ public class QuoteService {
     private Mapper ageMapper;
     private Mapper drivingExperienceMapper;
     private Mapper driverRecordMapper;
+    private Mapper claimsMapper;
 
     @Autowired
     public QuoteService(@Qualifier("ageFactorMapper") Mapper ageMapper,
             @Qualifier("drivingExperienceMapper") Mapper drivingExperienceMapper,
-            @Qualifier("driverRecordMapper") Mapper driverRecordMapper) {
+            @Qualifier("driverRecordMapper") Mapper driverRecordMapper,
+            @Qualifier("claimsMapper") Mapper claimsMapper) {
         this.ageMapper = ageMapper;
         this.drivingExperienceMapper = drivingExperienceMapper;
         this.driverRecordMapper = driverRecordMapper;
+        this.claimsMapper = claimsMapper;
     }
 
     Optional<Double> getAgeFactor(Byte age) {
@@ -36,6 +39,11 @@ public class QuoteService {
 
     Optional<Double> getDriverRecordFactor(Byte accidents) {
         Optional<Double> factor = driverRecordMapper.getFactor(accidents);
+        return factor;
+    }
+
+    Optional<Double> getClaimsFactor(Byte claims) {
+        Optional<Double> factor = claimsMapper.getFactor(claims);
         return factor;
     }
 }

@@ -18,7 +18,7 @@ public class DrivingExperienceMapper implements Mapper {
         if (value >= 5 && value < 10) {
             return Optional.of(1.0);
         }
-        return Optional.empty();
+        return Optional.of(0.9);
     }
 
 }

@@ -13,7 +13,10 @@ public class DriverRecordMapper implements Mapper {
             return Optional.of(1.0);
         }
         if (accidents == 1) {
-            return Optional.of(1.2);
+            return Optional.of(1.1);
+        }
+        if (accidents == 2 || accidents == 3) {
+            return Optional.of(1.3);
         }
         return Optional.empty();
     }
