@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class AgeFactorMapper implements Mapper {
 
     @Override
-    public Optional<Double> getFactor(Byte value) {
+    public Optional<Double> getFactor(Integer value) {
         if (value < 25) {
             return Optional.of(1.3);
         }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class DrivingExperienceMapper implements Mapper {
 
     @Override
-    public Optional<Double> getFactor(Byte value) {
+    public Optional<Double> getFactor(Integer value) {
         if (value < 2) {
             return Optional.of(1.5);
         }

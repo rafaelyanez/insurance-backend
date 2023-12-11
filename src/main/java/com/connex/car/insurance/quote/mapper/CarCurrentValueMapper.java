@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class CarCurrentValueMapper implements Mapper {
 
     @Override
-    public Optional<Double> getFactor(Byte currentValue) {
+    public Optional<Double> getFactor(Integer currentValue) {
         // 0 represents <$30,000
         if (currentValue == 0) {
             return Optional.of(0.8);

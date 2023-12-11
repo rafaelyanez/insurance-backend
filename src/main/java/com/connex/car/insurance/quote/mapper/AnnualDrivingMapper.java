@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class AnnualDrivingMapper implements Mapper {
 
     @Override
-    public Optional<Double> getFactor(Byte kilometres) {
+    public Optional<Double> getFactor(Integer kilometres) {
         // 0 represents < 20000km
         if (kilometres == 0) {
             return Optional.of(0.9);

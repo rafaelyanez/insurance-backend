@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class DriverRecordMapper implements Mapper {
 
     @Override
-    public Optional<Double> getFactor(Byte accidents) {
+    public Optional<Double> getFactor(Integer accidents) {
         if (accidents == 0) {
             return Optional.of(1.0);
         }

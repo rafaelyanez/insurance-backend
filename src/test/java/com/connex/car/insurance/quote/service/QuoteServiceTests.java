@@ -28,7 +28,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetAgeFactorForAgeUnder25() {
         // prepare
-        Byte age = 22; // I'm using byte as nobody has been over 122 years old :)
+        Integer age = 22; // I'm using Integer as nobody has been over 122 years old :)
         Double expectedFactor = 1.3;
         // call
         Optional<Double> factor = service.getAgeFactor(age);
@@ -40,7 +40,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetAgeFactorForAgeBetween25And40() {
         // prepare
-        Byte age = 39;
+        Integer age = 39;
         Double expectedFactor = 1.0;
         // call
         Optional<Double> factor = service.getAgeFactor(age);
@@ -52,7 +52,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetAgeFactorForAgeBetween40And70() {
         // prepare
-        Byte age = 40;
+        Integer age = 40;
         Double expectedFactor = 0.9;
         // call
         Optional<Double> factor = service.getAgeFactor(age);
@@ -64,7 +64,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetAgeFactorForAbove70() {
         // prepare
-        Byte age = 71;
+        Integer age = 71;
         // call
         Optional<Double> factor = service.getAgeFactor(age);
         // assert
@@ -74,7 +74,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetDrivingExperienceFactorLessThan2Years() {
         // prepare
-        Byte yearsOfExperience = 1;
+        Integer yearsOfExperience = 1;
         Double expectedFactor = 1.5;
         // call
         Optional<Double> factor = service.getDrivingExperienceFactor(yearsOfExperience);
@@ -86,7 +86,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetDrivingExperienceFactorMoreOrEqualThan2YearsAndLessThan5() {
         // prepare
-        Byte yearsOfExperience = 4;
+        Integer yearsOfExperience = 4;
         Double expectedFactor = 1.3;
         // call
         Optional<Double> factor = service.getDrivingExperienceFactor(yearsOfExperience);
@@ -98,7 +98,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetDrivingExperienceFactorMoreOrEqualThan5YearsAndLessThan10() {
         // prepare
-        Byte yearsOfExperience = 5;
+        Integer yearsOfExperience = 5;
         Double expectedFactor = 1.0;
         // call
         Optional<Double> factor = service.getDrivingExperienceFactor(yearsOfExperience);
@@ -110,7 +110,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetDrivingExperienceFactorGreaterThanOrEqual10() {
         // prepare
-        Byte yearsOfExperience = 10;
+        Integer yearsOfExperience = 10;
         Double expectedFactor = 0.9;
         // call
         Optional<Double> factor = service.getDrivingExperienceFactor(yearsOfExperience);
@@ -122,7 +122,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetDriverRecordFactor0Accidents() {
         // prepare
-        Byte accidents = 0;
+        Integer accidents = 0;
         Double expectedFactor = 1.0;
         // call
         Optional<Double> factor = service.getDriverRecordFactor(accidents);
@@ -134,7 +134,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetDriverRecordFactor1Accident() {
         // prepare
-        Byte accidents = 1;
+        Integer accidents = 1;
         Double expectedFactor = 1.1;
         // call
         Optional<Double> factor = service.getDriverRecordFactor(accidents);
@@ -146,7 +146,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetDriverRecordFactor3Accident() {
         // prepare
-        Byte accidents = 3;
+        Integer accidents = 3;
         Double expectedFactor = 1.3;
         // call
         Optional<Double> factor = service.getDriverRecordFactor(accidents);
@@ -158,7 +158,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetDriverRecordFactorMoreThan3Accident() {
         // prepare
-        Byte accidents = 4;
+        Integer accidents = 4;
         // call
         Optional<Double> factor = service.getDriverRecordFactor(accidents);
         // assert
@@ -168,7 +168,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetClaimsFactor0Claims() {
         // prepare
-        Byte claims = 0;
+        Integer claims = 0;
         Double expectedFactor = 0.9;
         // call
         Optional<Double> factor = service.getClaimsFactor(claims);
@@ -180,7 +180,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetClaimsFactor1Claim() {
         // prepare
-        Byte claims = 1;
+        Integer claims = 1;
         Double expectedFactor = 1.2;
         // call
         Optional<Double> factor = service.getClaimsFactor(claims);
@@ -192,7 +192,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetClaimsFactor2Claims() {
         // prepare
-        Byte claims = 2;
+        Integer claims = 2;
         Double expectedFactor = 1.5;
         // call
         Optional<Double> factor = service.getClaimsFactor(claims);
@@ -204,7 +204,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetClaimsFactor4Claims() {
         // prepare
-        Byte claims = 4;
+        Integer claims = 4;
         // call
         Optional<Double> factor = service.getClaimsFactor(claims);
         // assert
@@ -214,7 +214,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetAnnualDrivingFactorLessThan20000km() {
         // prepare
-        Byte kilometres = 0; // 0 represents the range of values under 20000km
+        Integer kilometres = 0; // 0 represents the range of values under 20000km
         Double expectedFactor = 0.9;
         // call
         Optional<Double> factor = service.getAnnualDrivingFactor(kilometres);
@@ -226,7 +226,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetAnnualDrivingFactorBetween20000kmAnd30000km() {
         // prepare
-        Byte kilometres = 1; // 1 represents the range >=20,000km<30,000km
+        Integer kilometres = 1; // 1 represents the range >=20,000km<30,000km
         Double expectedFactor = 1.0;
         // call
         Optional<Double> factor = service.getAnnualDrivingFactor(kilometres);
@@ -238,7 +238,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetAnnualDrivingFactorBetween30000kmAnd50000km() {
         // prepare
-        Byte kilometres = 2; // 2 represents the range >=30,000km<50,000km
+        Integer kilometres = 2; // 2 represents the range >=30,000km<50,000km
         Double expectedFactor = 1.1;
         // call
         Optional<Double> factor = service.getAnnualDrivingFactor(kilometres);
@@ -250,7 +250,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetAnnualDrivingFactorOver50000km() {
         // prepare
-        Byte kilometres = 3; // 2 represents the range >=50,000km
+        Integer kilometres = 3; // 2 represents the range >=50,000km
         Double expectedFactor = 1.3;
         // call
         Optional<Double> factor = service.getAnnualDrivingFactor(kilometres);
@@ -262,7 +262,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetAnnualDrivingFactorInvalidValue() {
         // prepare
-        Byte kilometres = 4; // this value does not represent any range
+        Integer kilometres = 4; // this value does not represent any range
         // call
         Optional<Double> factor = service.getAnnualDrivingFactor(kilometres);
         // assert
@@ -272,7 +272,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetInsuranceHistoryFactorNoInsurance() {
         // prepare
-        Byte insuranceHistory = 0;
+        Integer insuranceHistory = 0;
         Double expectedFactor = 1.2;
         // call
         Optional<Double> factor = service.getInsuranceHistoryFactor(insuranceHistory);
@@ -284,7 +284,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetInsuranceHistoryFactorLessThanOrEqual2() {
         // prepare
-        Byte insuranceHistory = 2;
+        Integer insuranceHistory = 2;
         Double expectedFactor = 1.1;
         // call
         Optional<Double> factor = service.getInsuranceHistoryFactor(insuranceHistory);
@@ -296,7 +296,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetInsuranceHistoryFactorMoreThan2() {
         // prepare
-        Byte insuranceHistory = 3;
+        Integer insuranceHistory = 3;
         Double expectedFactor = 1.0;
         // call
         Optional<Double> factor = service.getInsuranceHistoryFactor(insuranceHistory);
@@ -308,7 +308,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetCarCurrentValueFactorCurrentValueLessThan30000() {
         // prepare
-        Byte currentValue = 0; // 0 represents <$30,000
+        Integer currentValue = 0; // 0 represents <$30,000
         Double expectedFactor = 0.8;
         // call
         Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
@@ -320,7 +320,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetCarCurrentValueFactorCurrentValueBetween30000And60000() {
         // prepare
-        Byte currentValue = 1; // 1 represents >=$30,000 and <$60,000
+        Integer currentValue = 1; // 1 represents >=$30,000 and <$60,000
         Double expectedFactor = 1.0;
         // call
         Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
@@ -332,7 +332,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetCarCurrentValueFactorCurrentValueBetween60000And100000() {
         // prepare
-        Byte currentValue = 2; // 2 represents >=$60,000 and <$100,000
+        Integer currentValue = 2; // 2 represents >=$60,000 and <$100,000
         Double expectedFactor = 1.2;
         // call
         Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
@@ -344,7 +344,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetCarCurrentValueFactorCurrentValueBetween100000And150000() {
         // prepare
-        Byte currentValue = 3; // 3 represents >=$100,000 and <$150,000
+        Integer currentValue = 3; // 3 represents >=$100,000 and <$150,000
         Double expectedFactor = 1.5;
         // call
         Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
@@ -356,7 +356,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetCarCurrentValueFactorCurrentValueBetween150000And200000() {
         // prepare
-        Byte currentValue = 4; // 4 represents >=$150,000 and <$200,000
+        Integer currentValue = 4; // 4 represents >=$150,000 and <$200,000
         Double expectedFactor = 2.0;
         // call
         Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
@@ -368,7 +368,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetCarCurrentValueFactorCurrentValueOver200000() {
         // prepare
-        Byte currentValue = 5; // 5 represents >=$200,000
+        Integer currentValue = 5; // 5 represents >=$200,000
         // call
         Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
         // assert

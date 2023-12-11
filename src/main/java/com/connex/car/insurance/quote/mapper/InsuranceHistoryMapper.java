@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class InsuranceHistoryMapper implements Mapper {
 
     @Override
-    public Optional<Double> getFactor(Byte insuranceHistory) {
+    public Optional<Double> getFactor(Integer insuranceHistory) {
         if (insuranceHistory == 0) {
             return Optional.of(1.2);
         }

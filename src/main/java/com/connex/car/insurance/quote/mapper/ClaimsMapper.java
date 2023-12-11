@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class ClaimsMapper implements Mapper {
 
     @Override
-    public Optional<Double> getFactor(Byte claims) {
+    public Optional<Double> getFactor(Integer claims) {
         if (claims == 0) {
             return Optional.of(0.9);
         }
