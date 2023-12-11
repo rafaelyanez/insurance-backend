@@ -18,6 +18,8 @@ import com.connex.car.insurance.quote.service.QuoteService;
 public class QuoteController {
     private static final Logger log = LogManager.getLogger(QuoteController.class);
 
+    private static final Double BASE_PREMIUM = 2000.0;
+
     @Autowired
     private QuoteService service;
 
@@ -25,7 +27,7 @@ public class QuoteController {
     @CrossOrigin(origins = "https://frontend-dot-insurance-407608.uk.r.appspot.com")
     public Quote quote(@RequestBody QuoteData quoteData) {
         log.info("Quote Data from the client ==> " + quoteData);
-        Optional<Double> premium = service.getPremium(quoteData, 2000.0);
+        Optional<Double> premium = service.getPremium(quoteData, BASE_PREMIUM);
         if (premium.isPresent()) {
             return new Quote(premium.get(), "Q" + quoteData.hashCode(), true);
         } else {
