@@ -302,4 +302,5 @@ public class QuoteServiceTests {
         assertTrue(factor.isPresent());
         assertEquals(expectedFactor, factor.get());
     }
+
 }
