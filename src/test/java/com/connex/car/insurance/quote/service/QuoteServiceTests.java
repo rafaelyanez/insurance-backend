@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.connex.car.insurance.quote.mapper.AgeFactorMapper;
 import com.connex.car.insurance.quote.mapper.AnnualDrivingMapper;
+import com.connex.car.insurance.quote.mapper.CarCurrentValueMapper;
 import com.connex.car.insurance.quote.mapper.ClaimsMapper;
 import com.connex.car.insurance.quote.mapper.DriverRecordMapper;
 import com.connex.car.insurance.quote.mapper.DrivingExperienceMapper;
@@ -20,7 +21,8 @@ public class QuoteServiceTests {
     @BeforeAll
     public static void setUp() {
         service = new QuoteService(new AgeFactorMapper(), new DrivingExperienceMapper(), new DriverRecordMapper(),
-                new ClaimsMapper(), new AnnualDrivingMapper(), new InsuranceHistoryMapper());
+                new ClaimsMapper(), new AnnualDrivingMapper(), new InsuranceHistoryMapper(),
+                new CarCurrentValueMapper());
     }
 
     @Test
@@ -301,6 +303,76 @@ public class QuoteServiceTests {
         // assert
         assertTrue(factor.isPresent());
         assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetCarCurrentValueFactorCurrentValueLessThan30000() {
+        // prepare
+        Byte currentValue = 0; // 0 represents <$30,000
+        Double expectedFactor = 0.8;
+        // call
+        Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetCarCurrentValueFactorCurrentValueBetween30000And60000() {
+        // prepare
+        Byte currentValue = 1; // 1 represents >=$30,000 and <$60,000
+        Double expectedFactor = 1.0;
+        // call
+        Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetCarCurrentValueFactorCurrentValueBetween60000And100000() {
+        // prepare
+        Byte currentValue = 2; // 2 represents >=$60,000 and <$100,000
+        Double expectedFactor = 1.2;
+        // call
+        Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetCarCurrentValueFactorCurrentValueBetween100000And150000() {
+        // prepare
+        Byte currentValue = 3; // 3 represents >=$100,000 and <$150,000
+        Double expectedFactor = 1.5;
+        // call
+        Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetCarCurrentValueFactorCurrentValueBetween150000And200000() {
+        // prepare
+        Byte currentValue = 4; // 4 represents >=$150,000 and <$200,000
+        Double expectedFactor = 2.0;
+        // call
+        Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetCarCurrentValueFactorCurrentValueOver200000() {
+        // prepare
+        Byte currentValue = 5; // 5 represents >=$200,000
+        // call
+        Optional<Double> factor = service.getCarCurrentValueFactor(currentValue);
+        // assert
+        assertFalse(factor.isPresent());
     }
 
 }
