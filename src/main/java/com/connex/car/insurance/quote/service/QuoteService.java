@@ -84,7 +84,7 @@ public class QuoteService {
         Optional<Double> annualDrivingFactor = this.getAnnualDrivingFactor(quoteData.kilometres());
         Optional<Double> claimsFactor = this.getClaimsFactor(quoteData.claims());
         Optional<Double> driverRecordFactor = this.getDriverRecordFactor(quoteData.accidents());
-        Optional<Double> drivingExperienceFactor = this.getDrivingExperienceFactor(quoteData.drivingExperience());
+        Optional<Double> drivingExperienceFactor = this.getDrivingExperienceFactor(quoteData.yearsOfExperience());
         Optional<Double> insuranceHistoryFactor = this.getInsuranceHistoryFactor(quoteData.yearsInsuranceHistory());
         if (currentPriceFactor.isPresent()
                 && ageFactor.isPresent()
