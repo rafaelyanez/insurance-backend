@@ -8,9 +8,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.connex.car.insurance.quote.mapper.AgeFactorMapper;
+import com.connex.car.insurance.quote.mapper.AnnualDrivingMapper;
 import com.connex.car.insurance.quote.mapper.ClaimsMapper;
 import com.connex.car.insurance.quote.mapper.DriverRecordMapper;
 import com.connex.car.insurance.quote.mapper.DrivingExperienceMapper;
+import com.connex.car.insurance.quote.mapper.InsuranceHistoryMapper;
 
 public class QuoteServiceTests {
     private static QuoteService service;
@@ -18,7 +20,7 @@ public class QuoteServiceTests {
     @BeforeAll
     public static void setUp() {
         service = new QuoteService(new AgeFactorMapper(), new DrivingExperienceMapper(), new DriverRecordMapper(),
-                new ClaimsMapper());
+                new ClaimsMapper(), new AnnualDrivingMapper(), new InsuranceHistoryMapper());
     }
 
     @Test
@@ -205,5 +207,99 @@ public class QuoteServiceTests {
         Optional<Double> factor = service.getClaimsFactor(claims);
         // assert
         assertFalse(factor.isPresent());
+    }
+
+    @Test
+    public void testGetAnnualDrivingFactorLessThan20000km() {
+        // prepare
+        Byte kilometres = 0; // 0 represents the range of values under 20000km
+        Double expectedFactor = 0.9;
+        // call
+        Optional<Double> factor = service.getAnnualDrivingFactor(kilometres);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetAnnualDrivingFactorBetween20000kmAnd30000km() {
+        // prepare
+        Byte kilometres = 1; // 1 represents the range >=20,000km<30,000km
+        Double expectedFactor = 1.0;
+        // call
+        Optional<Double> factor = service.getAnnualDrivingFactor(kilometres);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetAnnualDrivingFactorBetween30000kmAnd50000km() {
+        // prepare
+        Byte kilometres = 2; // 2 represents the range >=30,000km<50,000km
+        Double expectedFactor = 1.1;
+        // call
+        Optional<Double> factor = service.getAnnualDrivingFactor(kilometres);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetAnnualDrivingFactorOver50000km() {
+        // prepare
+        Byte kilometres = 3; // 2 represents the range >=50,000km
+        Double expectedFactor = 1.3;
+        // call
+        Optional<Double> factor = service.getAnnualDrivingFactor(kilometres);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetAnnualDrivingFactorInvalidValue() {
+        // prepare
+        Byte kilometres = 4; // this value does not represent any range
+        // call
+        Optional<Double> factor = service.getAnnualDrivingFactor(kilometres);
+        // assert
+        assertFalse(factor.isPresent());
+    }
+
+    @Test
+    public void testGetInsuranceHistoryFactorNoInsurance() {
+        // prepare
+        Byte insuranceHistory = 0;
+        Double expectedFactor = 1.2;
+        // call
+        Optional<Double> factor = service.getInsuranceHistoryFactor(insuranceHistory);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetInsuranceHistoryFactorLessThanOrEqual2() {
+        // prepare
+        Byte insuranceHistory = 2;
+        Double expectedFactor = 1.1;
+        // call
+        Optional<Double> factor = service.getInsuranceHistoryFactor(insuranceHistory);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
+    }
+
+    @Test
+    public void testGetInsuranceHistoryFactorMoreThan2() {
+        // prepare
+        Byte insuranceHistory = 3;
+        Double expectedFactor = 1.0;
+        // call
+        Optional<Double> factor = service.getInsuranceHistoryFactor(insuranceHistory);
+        // assert
+        assertTrue(factor.isPresent());
+        assertEquals(expectedFactor, factor.get());
     }
 }

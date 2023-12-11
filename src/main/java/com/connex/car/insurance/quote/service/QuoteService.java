@@ -15,16 +15,22 @@ public class QuoteService {
     private Mapper drivingExperienceMapper;
     private Mapper driverRecordMapper;
     private Mapper claimsMapper;
+    private Mapper annualDrivingMapper;
+    private Mapper insuranceHistoryMapper;
 
     @Autowired
     public QuoteService(@Qualifier("ageFactorMapper") Mapper ageMapper,
             @Qualifier("drivingExperienceMapper") Mapper drivingExperienceMapper,
             @Qualifier("driverRecordMapper") Mapper driverRecordMapper,
-            @Qualifier("claimsMapper") Mapper claimsMapper) {
+            @Qualifier("claimsMapper") Mapper claimsMapper,
+            @Qualifier("annualDrivingMapper") Mapper annualDrivingMapper,
+            @Qualifier("insuranceHistoryMapper") Mapper insuranceHistoryMapper) {
         this.ageMapper = ageMapper;
         this.drivingExperienceMapper = drivingExperienceMapper;
         this.driverRecordMapper = driverRecordMapper;
         this.claimsMapper = claimsMapper;
+        this.annualDrivingMapper = annualDrivingMapper;
+        this.insuranceHistoryMapper = insuranceHistoryMapper;
     }
 
     Optional<Double> getAgeFactor(Byte age) {
@@ -44,6 +50,16 @@ public class QuoteService {
 
     Optional<Double> getClaimsFactor(Byte claims) {
         Optional<Double> factor = claimsMapper.getFactor(claims);
+        return factor;
+    }
+
+    Optional<Double> getAnnualDrivingFactor(Byte kilometres) {
+        Optional<Double> factor = annualDrivingMapper.getFactor(kilometres);
+        return factor;
+    }
+
+    Optional<Double> getInsuranceHistoryFactor(Byte insuranceHistory) {
+        Optional<Double> factor = insuranceHistoryMapper.getFactor(insuranceHistory);
         return factor;
     }
 }
