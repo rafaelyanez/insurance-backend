@@ -28,7 +28,7 @@ public class QuoteServiceTests {
     @Test
     public void testGetAgeFactorForAgeUnder25() {
         // prepare
-        Integer age = 22; // I'm using Integer as nobody has been over 122 years old :)
+        Integer age = 22;
         Double expectedFactor = 1.3;
         // call
         Optional<Double> factor = service.getAgeFactor(age);
