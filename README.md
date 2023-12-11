@@ -2,7 +2,7 @@
 
 ### Build
 
-The project needs to have Java17 installed in order to be build and run.
+The project needs to have Java17 installed in order to be built and run.
 
 The command to run it is:
 
